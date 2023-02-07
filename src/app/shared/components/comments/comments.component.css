@@ -1,0 +1,50 @@
+div.editable {
+    width: 300px;
+    height: 200px;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+strong {
+  font-weight: bold;
+}
+
+
+.scroll {
+  overflow: auto;
+    height: auto;
+    max-height: 207px;
+}
+
+/* li.list-group-item:hover {
+  background: #ffd6d7;
+}
+
+
+
+
+
+li.list-group-item.selected {
+    background: #ffd6d7;
+}
+ */
+.img_wrp {
+  display: inline-block;
+  position: relative;
+}
+.img_close {
+  width: 29px;
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  opacity: 2;
+}
+
+
+.gif-list {
+overflow: auto; height: auto; max-height: 500px; margin-right: -10px;
+}
+/* .user-profile-border.commet_left.mt-4{
+  border: 0;
+} */
+

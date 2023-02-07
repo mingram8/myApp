@@ -1,0 +1,106 @@
+
+
+
+      <div class="row">
+        <div class="col-md-8 pt-4">
+          <img src="assets/images/google_ads1.png" class="img-fluid">
+          <div class="watchlist mt-4">
+            <h3>Watchlist</h3>
+            <div class="media Watchlist_sort">
+               <div class="media-body">
+                 <select [(ngModel)]="sortType" (change)="getWatchlist()">
+                   <option value="MySort" selected="">Sort by MySort</option>
+                   <option value="A-Z">Sort by A-Z</option>
+                   <option value="Gain">Sort by Gain</option>
+                   <option value="Loss">Sort by Loss</option>
+                 </select>
+               </div>
+              <div *ngIf="!enableEdit" class="media-right">
+                <a type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <img src="assets/images/dot.png" class="img-fluid">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" x-placement="bottom-end"
+                  style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(659px, 203px, 0px);">
+                  <a class="dropdown-item" (click)="enableEditMode()">Edit</a>
+                </div>
+              </div>
+              <div *ngIf="enableEdit">
+                <button class="btn btn-danger" (click)="enableEditMode()">
+                Done
+                </button>
+              </div>
+            </div>
+            <div class="inputBox" *ngIf="enableEdit">
+                  <input id="myInputWatchlist" class="search-input" type="text" [(ngModel)]="keyword" placeholder="Search" (inputChanged)='onChangeSearch()'
+                    (keyup)="onChangeSearch()">
+                  <div id="searchDropdown" class="search-dropdown header-d add-watchlist" *ngIf="showData">
+                    <div class="w-100" *ngIf="showStockSearch">
+                      <div class="card first">
+
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item" *ngFor='let stock of stocksData;'>
+                            <a (click)="addWatchList(stock.symbol)" style="cursor: pointer;">
+                              <div class="dropdown-list-card">
+                                <div class="n-heading-block">
+                                  <h6 class="n-title">{{stock.symbol}}</h6>
+                                  <span class="n-sub-title">{{stock.name}}</span>
+                                </div>
+                                <div class="f-right">
+                                    <i style="cursor: pointer;" class="fa fa-plus-circle"></i>
+                                </div>
+                              </div>
+                            </a>
+
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+
+
+             <div class="trending_stocks_list">
+              <ul>
+                <li *ngFor="let list of watchList;">
+                  <div class="media align-items-center">
+                    <div class="media-left">
+                      <a [routerLink]="['/stock-profile', list.symbol]">
+                        <h5> {{ list.symbol }}</h5>
+                      </a>
+                      <p>{{list.description}}</p>
+                    </div>
+
+                    <div class="media-body text-center">
+                      <img *ngIf="list.priceChange === ''" src="assets/images/price_same.png" class="img-fluid mr-3">
+                      <img *ngIf="list.priceChange === 'up'" src="assets/images/market_green.png" class="img-fluid mr-3">
+                      <img *ngIf="list.priceChange === 'down'" src="assets/images/market_red.png" class="img-fluid mr-3">
+                    </div>
+
+                    <div class="media-right text-right pr-4">
+                      {{ list.close }} <strong class="text-success ml-3">
+                        <img *ngIf="list.priceChange === 'up'" src="assets/images/up_arrow.png" class="img-fluid">
+                        <img *ngIf="list.priceChange === 'down'" src="assets/images/down_arrow.png" class="img-fluid">
+                        <span [ngClass]="{'text-success': list.priceChange === 'up', 'text-danger' : list.priceChange === 'down', 'text-dark' : list.priceChange === ''}">
+                          {{list.changeInPrice | number}} ({{ list.changeInPercentage | number}} %)
+                        </span> </strong>
+                    </div>
+                    <div class="media-right text-right" [ngClass]="{'d-none': !enableEdit}">
+                      <img (click)="removeWatchList(list.symbol)" style="cursor: pointer;" src="assets/images/trash.svg" alt="trash">
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-4 pt-4">
+          <img src="assets/images/google_ads.png" class="img-fluid">
+
+          <app-sidebar-market-news></app-sidebar-market-news>
+
+          <div class="py-4"><img src="assets/images/google_ads.png" class="img-fluid"></div>
+          <!-- <app-blog-sidebar></app-blog-sidebar> -->
+
+        </div>
+      </div>

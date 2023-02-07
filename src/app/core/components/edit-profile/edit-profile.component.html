@@ -1,0 +1,334 @@
+
+
+      <div class="row">
+
+        <div class="col-md-12 pt-4">
+          <div class="profile_setting">
+            <h3 class="pb-3">Personal Infrmation</h3>
+
+            <div *ngIf="userdetail" class="media profile_pic_setting align-items-center pb-5">
+              <div class="media-left">
+
+                <img style="width: 50px; height: 50px;" id="image" src="{{ userdetail.picture != '' ? this.environment.server + '/image?name=' + userdetail.picture : 'assets/images/avtar.jpg'}}" onerror="this.src='assets/images/avtar.jpg'" #image class="rounded-circle z-depth-1 img-fluid">
+                <input type="hidden" id="imageHiddenForSrc" formControlName="picture" value="" >
+
+              </div>
+              <div class="media-body">
+                <input type="file" (change)="imageSelected($event)" #picture style="display: none;" id="picture" accept=".png, .jpg, .jpeg">
+                <a href="javascript:void(0)" (click)="openImageInput()" class="btn btn-secondary mr-3">Upload New Photo
+                </a>
+                <a href="javascript:void(0)" (click)="removeImage()" class="btn btn-outline-secondary">Remove</a>
+                <p class="pt-2">You can upload jpg, gif or png images files. <br>
+                Max file of 3mb.</p>
+              </div>
+            </div>
+
+            <form [formGroup]="updateUserForm" *ngIf="this.updateUserForm" (ngSubmit)="onClickUpdateUser()" enctype="multipart/form-data">
+
+              <div class="form-row">
+              <div class="form-group col-md-4">
+                <label>First Name</label>
+                <input formControlName="first_name" type="text" class="form-control">
+              </div>
+              <div class="form-group col-md-4">
+                <label>Last Name</label>
+                <input formControlName="last_name" type="text" class="form-control">
+              </div>
+              <div class="form-group col-md-4">
+                <label>Email Address</label>
+                <input value="{{userdetail.email}}"  disabled type="text" class="form-control" >
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label>Username</label>
+                <input value="{{userdetail.username}}" disabled type="text" class="form-control" >
+              </div>
+              <div class="form-group col-md-4">
+                <label>Gender</label>
+                <select matInput formControlName="gender" class="form-control">
+                  <option [selected]="userdetail.gender == ''">--Choose--</option>
+                  <option [selected]="userdetail.gender == 'Male'">Male</option>
+                  <option [selected]="userdetail.gender == 'Female'">Female</option>
+                  <option [selected]="userdetail.gender == 'Other'">Other</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Country</label>
+                <select matInput formControlName="country" class="form-control">
+                  <option [selected]="userdetail.country == ''">--Choose--</option>
+                  <option [selected]="userdetail.country == 'Afganistan'">Afghanistan</option>
+                  <option [selected]="userdetail.country == 'Albania'">Albania</option>
+                  <option [selected]="userdetail.country == 'Algeria'">Algeria</option>
+                  <option [selected]="userdetail.country == 'American Samoa'">American Samoa</option>
+                  <option [selected]="userdetail.country == 'Andorra'">Andorra</option>
+                  <option [selected]="userdetail.country == 'Angola'">Angola</option>
+                  <option [selected]="userdetail.country == 'Anguilla'">Anguilla</option>
+                  <option [selected]="userdetail.country == 'Antigua & Barbuda'">Antigua & Barbuda</option>
+                  <option [selected]="userdetail.country == 'Argentina'">Argentina</option>
+                  <option [selected]="userdetail.country == 'Armenia'">Armenia</option>
+                  <option [selected]="userdetail.country == 'Aruba'">Aruba</option>
+                  <option [selected]="userdetail.country == 'Australia'">Australia</option>
+                  <option [selected]="userdetail.country == 'Austria'">Austria</option>
+                  <option [selected]="userdetail.country == 'Azerbaijan'">Azerbaijan</option>
+                  <option [selected]="userdetail.country == 'Bahamas'">Bahamas</option>
+                  <option [selected]="userdetail.country == 'Bahrain'">Bahrain</option>
+                  <option [selected]="userdetail.country == 'Bangladesh'">Bangladesh</option>
+                  <option [selected]="userdetail.country == 'Barbados'">Barbados</option>
+                  <option [selected]="userdetail.country == 'Belarus'">Belarus</option>
+                  <option [selected]="userdetail.country == 'Belgium'">Belgium</option>
+                  <option [selected]="userdetail.country == 'Belize'">Belize</option>
+                  <option [selected]="userdetail.country == 'Benin'">Benin</option>
+                  <option [selected]="userdetail.country == 'Bermuda'">Bermuda</option>
+                  <option [selected]="userdetail.country == 'Bhutan'">Bhutan</option>
+                  <option [selected]="userdetail.country == 'Bolivia'">Bolivia</option>
+                  <option [selected]="userdetail.country == 'Bonaire'">Bonaire</option>
+                  <option [selected]="userdetail.country == 'Bosnia & Herzegovina'">Bosnia & Herzegovina</option>
+                  <option [selected]="userdetail.country == 'Botswana'">Botswana</option>
+                  <option [selected]="userdetail.country == 'Brazil'">Brazil</option>
+                  <option [selected]="userdetail.country == 'British Indian Ocean Ter'">British Indian Ocean Ter</option>
+                  <option [selected]="userdetail.country == 'Brunei'">Brunei</option>
+                  <option [selected]="userdetail.country == 'Bulgaria'">Bulgaria</option>
+                  <option [selected]="userdetail.country == 'Burkina Faso'">Burkina Faso</option>
+                  <option [selected]="userdetail.country == 'Burundi'">Burundi</option>
+                  <option [selected]="userdetail.country == 'Cambodia'">Cambodia</option>
+                  <option [selected]="userdetail.country == 'Cameroon'">Cameroon</option>
+                  <option [selected]="userdetail.country == 'Canada'">Canada</option>
+                  <option [selected]="userdetail.country == 'Canary Islands'">Canary Islands</option>
+                  <option [selected]="userdetail.country == 'Cape Verde'">Cape Verde</option>
+                  <option [selected]="userdetail.country == 'Cayman Islands'">Cayman Islands</option>
+                  <option [selected]="userdetail.country == 'Central African Republic'">Central African Republic</option>
+                  <option [selected]="userdetail.country == 'Chad'">Chad</option>
+                  <option [selected]="userdetail.country == 'Channel Islands'">Channel Islands</option>
+                  <option [selected]="userdetail.country == 'Chile'">Chile</option>
+                  <option [selected]="userdetail.country == 'China'">China</option>
+                  <option [selected]="userdetail.country == 'Christmas Island'">Christmas Island</option>
+                  <option [selected]="userdetail.country == 'Cocos Island'">Cocos Island</option>
+                  <option [selected]="userdetail.country == 'Colombia'">Colombia</option>
+                  <option [selected]="userdetail.country == 'Comoros'">Comoros</option>
+                  <option [selected]="userdetail.country == 'Congo'">Congo</option>
+                  <option [selected]="userdetail.country == 'Cook Islands'">Cook Islands</option>
+                  <option [selected]="userdetail.country == 'Costa Rica'">Costa Rica</option>
+                  <option [selected]="userdetail.country == 'Cote DIvoire'">Cote DIvoire</option>
+                  <option [selected]="userdetail.country == 'Croatia'">Croatia</option>
+                  <option [selected]="userdetail.country == 'Cuba'">Cuba</option>
+                  <option [selected]="userdetail.country == 'Curaco'">Curacao</option>
+                  <option [selected]="userdetail.country == 'Cyprus'">Cyprus</option>
+                  <option [selected]="userdetail.country == 'Czech Republic'">Czech Republic</option>
+                  <option [selected]="userdetail.country == 'Denmark'">Denmark</option>
+                  <option [selected]="userdetail.country == 'Djibouti'">Djibouti</option>
+                  <option [selected]="userdetail.country == 'Dominica'">Dominica</option>
+                  <option [selected]="userdetail.country == 'Dominican Republic'">Dominican Republic</option>
+                  <option [selected]="userdetail.country == 'East Timor'">East Timor</option>
+                  <option [selected]="userdetail.country == 'Ecuador'">Ecuador</option>
+                  <option [selected]="userdetail.country == 'Egypt'">Egypt</option>
+                  <option [selected]="userdetail.country == 'El Salvador'">El Salvador</option>
+                  <option [selected]="userdetail.country == 'Equatorial Guinea'">Equatorial Guinea</option>
+                  <option [selected]="userdetail.country == 'Eritrea'">Eritrea</option>
+                  <option [selected]="userdetail.country == 'Estonia'">Estonia</option>
+                  <option [selected]="userdetail.country == 'Ethiopia'">Ethiopia</option>
+                  <option [selected]="userdetail.country == 'Falkland Islands'">Falkland Islands</option>
+                  <option [selected]="userdetail.country == 'Faroe Islands'">Faroe Islands</option>
+                  <option [selected]="userdetail.country == 'Fiji'">Fiji</option>
+                  <option [selected]="userdetail.country == 'Finland'">Finland</option>
+                  <option [selected]="userdetail.country == 'France'">France</option>
+                  <option [selected]="userdetail.country == 'French Guiana'">French Guiana</option>
+                  <option [selected]="userdetail.country == 'French Polynesia'">French Polynesia</option>
+                  <option [selected]="userdetail.country == 'French Southern Ter'">French Southern Ter</option>
+                  <option [selected]="userdetail.country == 'Gabon'">Gabon</option>
+                  <option [selected]="userdetail.country == 'Gambia'">Gambia</option>
+                  <option [selected]="userdetail.country == 'Georgia'">Georgia</option>
+                  <option [selected]="userdetail.country == 'Germany'">Germany</option>
+                  <option [selected]="userdetail.country == 'Ghana'">Ghana</option>
+                  <option [selected]="userdetail.country == 'Gibraltar'">Gibraltar</option>
+                  <option [selected]="userdetail.country == 'Great Britain'">Great Britain</option>
+                  <option [selected]="userdetail.country == 'Greece'">Greece</option>
+                  <option [selected]="userdetail.country == 'Greenland'">Greenland</option>
+                  <option [selected]="userdetail.country == 'Grenada'">Grenada</option>
+                  <option [selected]="userdetail.country == 'Guadeloupe'">Guadeloupe</option>
+                  <option [selected]="userdetail.country == 'Guam'">Guam</option>
+                  <option [selected]="userdetail.country == 'Guatemala'">Guatemala</option>
+                  <option [selected]="userdetail.country == 'Guinea'">Guinea</option>
+                  <option [selected]="userdetail.country == 'Guyana'">Guyana</option>
+                  <option [selected]="userdetail.country == 'Haiti'">Haiti</option>
+                  <option [selected]="userdetail.country == 'Hawaii'">Hawaii</option>
+                  <option [selected]="userdetail.country == 'Honduras'">Honduras</option>
+                  <option [selected]="userdetail.country == 'Hong Kong'">Hong Kong</option>
+                  <option [selected]="userdetail.country == 'Hungary'">Hungary</option>
+                  <option [selected]="userdetail.country == 'Iceland'">Iceland</option>
+                  <option [selected]="userdetail.country == 'Indonesia'">Indonesia</option>
+                  <option [selected]="userdetail.country == 'India'">India</option>
+                  <option [selected]="userdetail.country == 'Iran'">Iran</option>
+                  <option [selected]="userdetail.country == 'Iraq'">Iraq</option>
+                  <option [selected]="userdetail.country == 'Ireland'">Ireland</option>
+                  <option [selected]="userdetail.country == 'Isle of Man'">Isle of Man</option>
+                  <option [selected]="userdetail.country == 'Israel'">Israel</option>
+                  <option [selected]="userdetail.country == 'Italy'">Italy</option>
+                  <option [selected]="userdetail.country == 'Jamaica'">Jamaica</option>
+                  <option [selected]="userdetail.country == 'Japan'">Japan</option>
+                  <option [selected]="userdetail.country == 'Jordan'">Jordan</option>
+                  <option [selected]="userdetail.country == 'Kazakhstan'">Kazakhstan</option>
+                  <option [selected]="userdetail.country == 'Kenya'">Kenya</option>
+                  <option [selected]="userdetail.country == 'Kiribati'">Kiribati</option>
+                  <option [selected]="userdetail.country == 'Korea North'">Korea North</option>
+                  <option [selected]="userdetail.country == 'Korea Sout'">Korea South</option>
+                  <option [selected]="userdetail.country == 'Kuwait'">Kuwait</option>
+                  <option [selected]="userdetail.country == 'Kyrgyzstan'">Kyrgyzstan</option>
+                  <option [selected]="userdetail.country == 'Laos'">Laos</option>
+                  <option [selected]="userdetail.country == 'Latvia'">Latvia</option>
+                  <option [selected]="userdetail.country == 'Lebanon'">Lebanon</option>
+                  <option [selected]="userdetail.country == 'Lesotho'">Lesotho</option>
+                  <option [selected]="userdetail.country == 'Liberia'">Liberia</option>
+                  <option [selected]="userdetail.country == 'Libya'">Libya</option>
+                  <option [selected]="userdetail.country == 'Liechtenstein'">Liechtenstein</option>
+                  <option [selected]="userdetail.country == 'Lithuania'">Lithuania</option>
+                  <option [selected]="userdetail.country == 'Luxembourg'">Luxembourg</option>
+                  <option [selected]="userdetail.country == 'Macau'">Macau</option>
+                  <option [selected]="userdetail.country == 'Macedonia'">Macedonia</option>
+                  <option [selected]="userdetail.country == 'Madagascar'">Madagascar</option>
+                  <option [selected]="userdetail.country == 'Malaysia'">Malaysia</option>
+                  <option [selected]="userdetail.country == 'Malawi'">Malawi</option>
+                  <option [selected]="userdetail.country == 'Maldives'">Maldives</option>
+                  <option [selected]="userdetail.country == 'Mali'">Mali</option>
+                  <option [selected]="userdetail.country == 'Malta'">Malta</option>
+                  <option [selected]="userdetail.country == 'Marshall Islands'">Marshall Islands</option>
+                  <option [selected]="userdetail.country == 'Martinique'">Martinique</option>
+                  <option [selected]="userdetail.country == 'Mauritania'">Mauritania</option>
+                  <option [selected]="userdetail.country == 'Mauritius'">Mauritius</option>
+                  <option [selected]="userdetail.country == 'Mayotte'">Mayotte</option>
+                  <option [selected]="userdetail.country == 'Mexico'">Mexico</option>
+                  <option [selected]="userdetail.country == 'Midway Islands'">Midway Islands</option>
+                  <option [selected]="userdetail.country == 'Moldova'">Moldova</option>
+                  <option [selected]="userdetail.country == 'Monaco'">Monaco</option>
+                  <option [selected]="userdetail.country == 'Mongolia'">Mongolia</option>
+                  <option [selected]="userdetail.country == 'Montserrat'">Montserrat</option>
+                  <option [selected]="userdetail.country == 'Morocco'">Morocco</option>
+                  <option [selected]="userdetail.country == 'Mozambique'">Mozambique</option>
+                  <option [selected]="userdetail.country == 'Myanmar'">Myanmar</option>
+                  <option [selected]="userdetail.country == 'Nambia'">Nambia</option>
+                  <option [selected]="userdetail.country == 'Nauru'">Nauru</option>
+                  <option [selected]="userdetail.country == 'Nepal'">Nepal</option>
+                  <option [selected]="userdetail.country == 'Netherland Antilles'">Netherland Antilles</option>
+                  <option [selected]="userdetail.country == 'Netherlands'">Netherlands (Holland, Europe)</option>
+                  <option [selected]="userdetail.country == 'Nevis'">Nevis</option>
+                  <option [selected]="userdetail.country == 'New Caledonia'">New Caledonia</option>
+                  <option [selected]="userdetail.country == 'New Zealand'">New Zealand</option>
+                  <option [selected]="userdetail.country == 'Nicaragua'">Nicaragua</option>
+                  <option [selected]="userdetail.country == 'Niger'">Niger</option>
+                  <option [selected]="userdetail.country == 'Nigeria'">Nigeria</option>
+                  <option [selected]="userdetail.country == 'Niue'">Niue</option>
+                  <option [selected]="userdetail.country == 'Norfolk Island'">Norfolk Island</option>
+                  <option [selected]="userdetail.country == 'Norway'">Norway</option>
+                  <option [selected]="userdetail.country == 'Oman'">Oman</option>
+                  <option [selected]="userdetail.country == 'Pakistan'">Pakistan</option>
+                  <option [selected]="userdetail.country == 'Palau Island'">Palau Island</option>
+                  <option [selected]="userdetail.country == 'Palestine'">Palestine</option>
+                  <option [selected]="userdetail.country == 'Panama'">Panama</option>
+                  <option [selected]="userdetail.country == 'Papua New Guinea'">Papua New Guinea</option>
+                  <option [selected]="userdetail.country == 'Paraguay'">Paraguay</option>
+                  <option [selected]="userdetail.country == 'Peru'">Peru</option>
+                  <option [selected]="userdetail.country == 'Phillipines'">Philippines</option>
+                  <option [selected]="userdetail.country == 'Pitcairn Island'">Pitcairn Island</option>
+                  <option [selected]="userdetail.country == 'Poland'">Poland</option>
+                  <option [selected]="userdetail.country == 'Portugal'">Portugal</option>
+                  <option [selected]="userdetail.country == 'Puerto Rico'">Puerto Rico</option>
+                  <option [selected]="userdetail.country == 'Qatar'">Qatar</option>
+                  <option [selected]="userdetail.country == 'Republic of Montenegro'">Republic of Montenegro</option>
+                  <option [selected]="userdetail.country == 'Republic of Serbia'">Republic of Serbia</option>
+                  <option [selected]="userdetail.country == 'Reunion'">Reunion</option>
+                  <option [selected]="userdetail.country == 'Romania'">Romania</option>
+                  <option [selected]="userdetail.country == 'Russia'">Russia</option>
+                  <option [selected]="userdetail.country == 'Rwanda'">Rwanda</option>
+                  <option [selected]="userdetail.country == 'St Barthelemy'">St Barthelemy</option>
+                  <option [selected]="userdetail.country == 'St Eustatius'">St Eustatius</option>
+                  <option [selected]="userdetail.country == 'St Helena'">St Helena</option>
+                  <option [selected]="userdetail.country == 'St Kitts-Nevis'">St Kitts-Nevis</option>
+                  <option [selected]="userdetail.country == 'St Lucia'">St Lucia</option>
+                  <option [selected]="userdetail.country == 'St Maarten'">St Maarten</option>
+                  <option [selected]="userdetail.country == 'St Pierre & Miquelon'">St Pierre & Miquelon</option>
+                  <option [selected]="userdetail.country == 'St Vincent & Grenadines'">St Vincent & Grenadines</option>
+                  <option [selected]="userdetail.country == 'Saipan'">Saipan</option>
+                  <option [selected]="userdetail.country == 'Samoa'">Samoa</option>
+                  <option [selected]="userdetail.country == 'Samoa American'">Samoa American</option>
+                  <option [selected]="userdetail.country == 'San Marino'">San Marino</option>
+                  <option [selected]="userdetail.country == 'Sao Tome & Principe'">Sao Tome & Principe</option>
+                  <option [selected]="userdetail.country == 'Saudi Arabia'">Saudi Arabia</option>
+                  <option [selected]="userdetail.country == 'Senegal'">Senegal</option>
+                  <option [selected]="userdetail.country == 'Seychelles'">Seychelles</option>
+                  <option [selected]="userdetail.country == 'Sierra Leone'">Sierra Leone</option>
+                  <option [selected]="userdetail.country == 'Singapore'">Singapore</option>
+                  <option [selected]="userdetail.country == 'Slovakia'">Slovakia</option>
+                  <option [selected]="userdetail.country == 'Slovenia'">Slovenia</option>
+                  <option [selected]="userdetail.country == 'Solomon Islands'">Solomon Islands</option>
+                  <option [selected]="userdetail.country == 'Somalia'">Somalia</option>
+                  <option [selected]="userdetail.country == 'South Africa'">South Africa</option>
+                  <option [selected]="userdetail.country == 'Spain'">Spain</option>
+                  <option [selected]="userdetail.country == 'Sri Lanka'">Sri Lanka</option>
+                  <option [selected]="userdetail.country == 'Sudan'">Sudan</option>
+                  <option [selected]="userdetail.country == 'Suriname'">Suriname</option>
+                  <option [selected]="userdetail.country == 'Swaziland'">Swaziland</option>
+                  <option [selected]="userdetail.country == 'Sweden'">Sweden</option>
+                  <option [selected]="userdetail.country == 'Switzerland'">Switzerland</option>
+                  <option [selected]="userdetail.country == 'Syria'">Syria</option>
+                  <option [selected]="userdetail.country == 'Tahiti'">Tahiti</option>
+                  <option [selected]="userdetail.country == 'Taiwan'">Taiwan</option>
+                  <option [selected]="userdetail.country == 'Tajikistan'">Tajikistan</option>
+                  <option [selected]="userdetail.country == 'Tanzania'">Tanzania</option>
+                  <option [selected]="userdetail.country == 'Thailand'">Thailand</option>
+                  <option [selected]="userdetail.country == 'Togo'">Togo</option>
+                  <option [selected]="userdetail.country == 'Tokelau'">Tokelau</option>
+                  <option [selected]="userdetail.country == 'Tonga'">Tonga</option>
+                  <option [selected]="userdetail.country == 'Trinidad & Tobago'">Trinidad & Tobago</option>
+                  <option [selected]="userdetail.country == 'Tunisia'">Tunisia</option>
+                  <option [selected]="userdetail.country == 'Turkey'">Turkey</option>
+                  <option [selected]="userdetail.country == 'Turkmenistan'">Turkmenistan</option>
+                  <option [selected]="userdetail.country == 'Turks & Caicos Is'">Turks & Caicos Is</option>
+                  <option [selected]="userdetail.country == 'Tuvalu'">Tuvalu</option>
+                  <option [selected]="userdetail.country == 'Uganda'">Uganda</option>
+                  <option [selected]="userdetail.country == 'United Kingdom'">United Kingdom</option>
+                  <option [selected]="userdetail.country == 'Ukraine'">Ukraine</option>
+                  <option [selected]="userdetail.country == 'United Arab Erimates'">United Arab Emirates</option>
+                  <option [selected]="userdetail.country == 'United States of America'">United States of America</option>
+                  <option [selected]="userdetail.country == 'Uraguay'">Uruguay</option>
+                  <option [selected]="userdetail.country == 'Uzbekistan'">Uzbekistan</option>
+                  <option [selected]="userdetail.country == 'Vanuatu'">Vanuatu</option>
+                  <option [selected]="userdetail.country == 'Vatican City State'">Vatican City State</option>
+                  <option [selected]="userdetail.country == 'Venezuela'">Venezuela</option>
+                  <option [selected]="userdetail.country == 'Vietnam'">Vietnam</option>
+                  <option [selected]="userdetail.country == 'Virgin Islands (Brit)'">Virgin Islands (Brit)</option>
+                  <option [selected]="userdetail.country == 'Virgin Islands (USA)'">Virgin Islands (USA)</option>
+                  <option [selected]="userdetail.country == 'Wake Island'">Wake Island</option>
+                  <option [selected]="userdetail.country == 'Wallis & Futana Is'">Wallis & Futana Is</option>
+                  <option [selected]="userdetail.country == 'Yemen'">Yemen</option>
+                  <option [selected]="userdetail.country == 'Zaire'">Zaire</option>
+                  <option [selected]="userdetail.country == 'Zambia'">Zambia</option>
+                  <option [selected]="userdetail.country == 'Zimbabwe'">Zimbabwe</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label>Current city</label>
+                <input matInput formControlName="city" type="text" class="form-control" >
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-2">
+                <button type="submit" class="btn btn-danger btn-lg" >Save Changes</button>
+              </div>
+              <div class="form-group parent" style="display: inline-flex">
+                <div *ngIf="message" [ngClass]="message.cssClass">{{message.text}}</div>
+              </div>
+            </div>
+
+          </form>
+
+
+
+          </div>
+
+        </div>
+      </div>

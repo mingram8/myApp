@@ -1,0 +1,54 @@
+
+
+
+    <div class="row pt-5" *ngIf="blog">
+      <div class="col-lg-8">
+        <div class="blog-post-detail mt-4">
+          <div class="blog-single">
+            <div class="blog-post-cover mb-4">
+              <img src="{{blog.banner}}" alt="blog-large" class="img-fluid w-100">
+            </div>
+            <h2 class="pb-2">{{blog.title}}
+            </h2>
+            <h6>By <a href="javascript:">{{blog.user.first_name + " " + blog.user.last_name}}</a> <i class="far fa-clock ml-2"></i> {{(blog.time*1000) | date}} <i class="far fa-comment ml-2"></i>
+              15</h6>
+            <!-- <p class="py-3">Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus
+              elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae,
+              eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.</p> -->
+            <p class="pt-4">{{blog.text}}</p>
+          </div>
+          <div class="post-comment-box">
+            <h3>Leave A Reply</h3>
+            <form action="post-layout-1.html" method="post" id="commentform" class="comment-form">
+              <p class="comment-notes">
+                <span id="email-notes">Your email address will not be published.</span> Required fields are marked <span
+                  class="required">*</span>
+              </p>
+              <p class="comment-form-comment">
+                <textarea class="u-full-width" id="comment" name="comment" cols="45" rows="8" aria-required="true"
+                  placeholder="Comment"></textarea>
+              </p>
+              <div class="form-fields row">
+                <span class="comment-form-author col-md-6">
+                  <input id="author" name="author" type="text" value="" size="30" placeholder="Fullname">
+                </span>
+                <span class="comment-form-email col-md-6">
+                  <input id="email" name="email" type="text" value="" size="30" placeholder="Email Address">
+                </span>
+              </div>
+              <p class="email-save">
+                <input id="check" name="" type="checkbox" value="yes">
+                <label for="">Save my name, email, and website in this browser for the next time I comment.</label>
+              </p>
+              <p class="form-submit">
+                <button class="btn btn-danger btn-lg" (click)="onComment()">Post Comment</button>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <!--get trending stock-->
+        <app-sidebar-trending-stocks></app-sidebar-trending-stocks>
+</div>
+    </div>

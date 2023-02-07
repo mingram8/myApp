@@ -1,0 +1,45 @@
+
+
+    <div class="row">
+      <div class="col-md-8 pt-4">
+
+
+          <router-outlet></router-outlet>
+          <div class="right-block messages-list" *ngIf="!showChat">
+            <div class="title-block">
+              <h4>Messages</h4>
+            </div>
+            <ul class="message-list-contianer">
+              <!-- Start Msg Card -->
+              <li class="user-msg-card unread" *ngFor="let message of messagesData;">
+
+                <a [routerLink]="['/messages', message.data.id, message.data.users[0], message.data.users[1]]" (click)="showChatFunc()">
+                  <div class="media">
+                    <div class="media-left"><img src="{{ '' != '' ? this.environment.server + '/image?name=' + message.receiver_user.picture : 'assets/images/avtar.jpg'}}" onerror="this.src='assets/images/avtar.jpg'" class="rounded-circle z-depth-1 img-fluid"></div>
+                  <div class="media-body">
+                    <a class="sender_name" [routerLink]="['/user-profile', message.data.users[1]]">
+                      <h5 style="display: inline-block;">{{message.data.users[1]}}</h5> <br>
+                    </a>
+                    <span *ngIf="message.recentMessage">{{ message.recentMessage.messageText }}</span>
+                  </div>
+                  <div *ngIf="message.recentMessage" class="msg-time">{{message['recentMessage'].sentAt | date : 'medium' }}</div>
+                </div>
+              </a>
+              </li>
+
+              <!-- End Msg Card -->
+
+            </ul>
+          </div>
+
+      </div>
+      <div class="col-md-4 pt-4">
+        <img src="assets/images/google_ads.png" class="img-fluid">
+        <!--get trending stock-->
+        <app-sidebar-trending-stocks></app-sidebar-trending-stocks>
+
+        <div class="py-4"><img src="assets/images/google_ads.png" class="img-fluid"></div>
+        <!--get company market news-->
+        <app-sidebar-market-news></app-sidebar-market-news>
+      </div>
+    </div>

@@ -1,0 +1,81 @@
+    <div class="row">
+      <div class="col-md-8 pt-4">
+        <img src="assets/images/google_ads1.png" class="img-fluid w-100">
+<div class="market_news mt-4">
+    <!-- <h4>Market News</h4> -->
+      <div class="row">
+        <div class="col-md-8">
+          <div class="main-news-big">
+            <div class="media" *ngFor="let news of marketNews;">
+              <div class="media-right">
+                <img src="{{news.image}}" class="img-fluid w-100">
+              </div>
+              <div class="media-body">
+                <!-- <p>{{news.title}}</p> -->
+                <h3><a target="_blank" style="font-weight: bold;" href="{{news.url}}">
+                  {{news.title}}
+                </a></h3>
+                <h6>{{news.publishedDate}}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="main-news-sidebar">
+            <div class="media" *ngFor="let news of marketNews;">
+              <div class="row">
+                <div class="col-4 pr-0">
+                  <div class="media-right">
+                    <img src="{{news.image}}" class="img-fluid w-100">
+                  </div>                  
+                </div>
+                <div class="col-8">
+                  <div class="media-body">
+                    <!-- <p>{{news.title}}</p> -->
+                    <a target="_blank" style="font-weight: bold;" href="{{news.url}}">
+                      {{news.title}}
+                    </a>
+                    <h6 class="mt-2">{{news.publishedDate}}</h6>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div >
+      <div class="market_news">
+        <div class="media mt-5 w-100" *ngFor="let news of marketNews;">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="media-right">
+                <img src="{{news.image}}" class="img-fluid w-100">
+              </div>                  
+            </div>
+            <div class="col-sm-8">
+              <div class="media-body">
+                <!-- <p>{{news.title}}</p> -->
+                <h6 class="mb-2">{{news.publishedDate}}</h6>
+                <h5><a target="_blank" style="font-weight: bold;" href="{{news.url}}">
+                  {{news.title}}
+                </a></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+      </div>
+      <div class="col-md-4 pt-4">
+        <img src="assets/images/google_ads.png" class="img-fluid w-100">
+
+        <!--get company market news-->
+        <app-sidebar-market-news></app-sidebar-market-news>
+
+        <div class="py-4"><img src="assets/images/google_ads.png" class="img-fluid"></div>
+
+
+      </div>
+    </div>

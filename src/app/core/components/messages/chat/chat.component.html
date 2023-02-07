@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-md-8 pt-4">
+
+
+    <div class="right-block messages-list">
+      <div class="title-block d-flex align-items-center justify-content-between">
+        <div class="title-left-block d-flex align-items-center">
+          <a [routerLink]="['/messages']" class="back-btn">
+            <img src="assets/images/back.png" alt="back">
+          </a>
+          <div class="chat-user-info d-flex">
+            <img src="assets/images/avtar.jpg" class="rounded-circle z-depth-1 img-fluid profile">
+            <div class="txt--info pl-3">
+              <h5 class="font-weight-bold mb-1">@{{username}}</h5>
+              <span>{{username}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="info-dots">
+          <a href="javascript:">
+            <a href="javascript:" class="dropdown-toggle info-dropdown" data-toggle="dropdown"><img
+                src="assets/images/dot.png" alt="dot"></a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+              <!-- <a class="dropdown-item" href="chat">Report user</a>
+              <a class="dropdown-item" href="chat">Block user</a> -->
+              <a class="dropdown-item" href="javascript:" (click)="deleteChat()">Delete chat</a>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="chat-container">
+        <div id="chat-area" class="chat-area">
+          <div *ngFor="let message of messages">
+            <div class="chat-msg" [ngClass]="{'self' : message.sentBy == storageData['id']}">
+              <div class="chat-msg-card">
+                {{message.messageText}}
+              </div>
+              <span>{{message.sentAt | date : 'medium'}}</span>
+            </div>
+            <div class="chat-msg">
+
+            </div>
+          </div>
+
+
+
+        </div>
+        <div class="type-msg">
+          <input type="text" placeholder="Type text here..." [(ngModel)]="message" class="chat-control">
+          <a href="javascript:" style="cursor: pointer;" (click)="sendMessage()">
+            <img src="assets/images/send.png" alt="send">
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="col-md-4 pt-4">
+    <img src="assets/images/google_ads.png" class="img-fluid">
+    <!--get trending stock-->
+    <app-sidebar-trending-stocks></app-sidebar-trending-stocks>
+
+    <div class="py-4"><img src="assets/images/google_ads.png" class="img-fluid"></div>
+    <!--get company market news-->
+    <app-sidebar-market-news></app-sidebar-market-news>
+  </div>
+</div>
+
+
+
+

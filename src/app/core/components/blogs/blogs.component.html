@@ -1,0 +1,41 @@
+
+
+    <div class="row">
+      <div class="col-lg-8 pt-4">
+        <div class="row">
+
+
+
+          <div class="col-lg-4 col-md-6" *ngFor="let blog of blogs">
+            <div class="card blog-card">
+              <a [routerLink]="['/blog-detail', blog.id]">
+                <img src="{{blog.banner}}" class="img-fluid">
+
+              </a>
+              <div class="post-body d-block">
+                <div class="timing mb-2"> {{blog.time*1000 | date : 'medium'}} </div> 
+                <a [routerLink]="['/blog-detail', blog.id]">
+
+                  <h5>{{blog.title}}</h5>
+                </a>
+
+                <p class="pt-2">{{blog.text}}</p>
+              </div>
+              <div class="post-footer">
+                <h6> 
+                  <div class="by"> By </div> 
+                  <div class="user_first_name">  
+                    <a href="#">{{blog.user.first_name + " " + blog.user.last_name }}</a> 
+                  </div> 
+                  <div class="comment"> <i class="fas fa-comment ml-2"></i> 15 </div> </h6>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <!--get trending stock-->
+        <app-sidebar-trending-stocks></app-sidebar-trending-stocks>
+</div>
+    </div>

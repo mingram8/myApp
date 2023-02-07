@@ -1,0 +1,123 @@
+<header class="header-area formobile-menu default-color">
+    <div class="container-fluid">
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="logo">
+        <a routerLink="/">
+          <img src="assets/images/logo.png">
+        </a>
+        </div>
+        <li class="nav-item message" *ngIf="user">
+          <a class="nav-link" routerLink="/messages" routerLinkActive="active"><i class="far fa-comment-alt"></i></a>
+        </li>
+        <li class="nav-item notification" *ngIf="user">
+          <a class="nav-link" routerLink="/notifications"><i class="fas fa-bell"></i></a>
+        </li>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7"
+          aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>              
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">
+              <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+              <a class="nav-link" routerLink="/trending/all" routerLinkActive="active">Trending</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+              <a class="nav-link" routerLink="/watch-list" routerLinkActive="active">Watch List</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+              <a class="nav-link" routerLink="/blogs" routerLinkActive="active">Blogs</a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav right_nav">
+
+
+            <li id="header-search-box" class="nav-item search_box">
+              <div class="searchBox" id="searchBox">
+              <div class="inputBox">
+                <input id="myInput" (focusout)="focusOutFunction()" type="text" [(ngModel)]="keyword" placeholder="Symbol or @username" (inputChanged)='onChangeSearch()'
+                  (keyup)="onChangeSearch()" (focus)='onFocused()'>
+                <button onclick="addSearch(this,event)" class="search_icon"><i class="fas fa-search"></i> </button>
+                <div class="search-dropdown header-d" *ngIf="showData">
+                  <div class="w-100" *ngIf="showStockSearch">
+                    <div class="card first">
+                      <div class="card-header">
+                        <strong>Stocks</strong>
+                      </div>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor='let stock of stocksData;'>
+                          <a [routerLink]="['/stock-profile', stock.symbol]">
+                            <div class="dropdown-list-card">
+                              <div class="n-heading-block">
+                                <h6 class="n-title">{{stock.symbol}}</h6>
+                                <span class="n-sub-title">{{stock.name}}</span>
+                              </div>
+                              <div class="f-right">
+                              </div>
+                            </div>
+                          </a>
+
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="w-100" *ngIf="showUserSearch">
+                    <div class="card">
+                      <div class="card-header">
+                        <strong>People</strong>
+                      </div>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor='let user of usersData;'>
+                          <a [routerLink]="['/user-profile', user.username]">
+                            <div class="dropdown-list-card">
+                              <div class="n-heading-block">
+                                <h6 class="n-title">{{user.username}}</h6>
+                                <span class="n-sub-title"> {{user.first_name}} {{user.last_name}} </span>
+                              </div>
+                              <div class="f-right">
+                                <img src="{{ user.picture != '' ? this.environment.server + '/image?name=' + user.picture : 'assets/images/avtar.jpg'}}" onerror="this.src='assets/images/avtar.jpg'" alt="">
+                              </div>
+                            </div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span class="closeBtn" id="myCloseBtn"></span>
+            </div>
+            </li>
+            <li class="nav-item message4" *ngIf="user">
+              <a class="nav-link" routerLink="/messages" routerLinkActive="active"><i class="far fa-comment-alt"></i></a>
+            </li>
+            <li class="nav-item notification4" *ngIf="user">
+              <a class="nav-link" routerLink="/notifications"><i class="fas fa-bell"></i></a>
+            </li>
+            <li class="nav-item dropdown profile_dropdown" *ngIf="userdetail">
+              <a class="dropdown-toggle dropdown_btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img style="height: 40px; width: 40px;" src="{{ userdetail.picture != '' ? this.environment.server + '/image?name=' + userdetail.picture : 'assets/images/avtar.jpg'}}" onerror="this.src='assets/images/avtar.jpg'" class="rounded-circle z-depth-1 img-fluid"></a>
+                <div *ngIf="userdetail" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/user-profile', userdetail.username]" routerLinkActive="active">View Profile</a>
+                  <a class="dropdown-item" href="javascript:void(0)" routerLink="/edit-profile" routerLinkActive="active">Edit Profile</a>
+                  <a class="dropdown-item" routerLink="/user-setting" routerLinkActive="active" href="javascript:void(0)">Settings</a>
+                  <a class="dropdown-item" href="javascript:void(0)" (click)="logout()">Sign Out</a>
+                </div>
+            </li>
+            <li class="nav-item" *ngIf="currentUser == null">
+              <a class="nav-link" data-toggle="modal" data-target="#login_modal" style="cursor: pointer;">Sign In</a>
+            </li>
+            <li class="nav-item" *ngIf="currentUser == null">
+              <a class="btn btn-danger" data-toggle="modal" data-target="#register_modal">Sign Up</a>
+            </li>
+            <a style="display: none;" id="loginOpenButton" data-toggle="modal" data-target="#login_modal">Sign In</a>
+            <a style="display: none;" id="registerOpenButton" data-toggle="modal" data-target="#register_modal">Sign Up</a>
+          </ul>
+        </div>
+    </nav>
+    </div>
+</header>

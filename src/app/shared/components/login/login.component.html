@@ -1,0 +1,83 @@
+  <!-- Login Modal -->
+  <div class="modal fade" id="login_modal" #loginModal tabindex="-1" role="dialog" aria-labelledby="login_modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content login_signup">
+        <div class="modal-header text-center">
+          <div class="logo mx-auto"><img src="assets/images/logo.png"></div>
+          <button type="button" id="loginModalClose" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4 class="modal-title text-center pb-4" id="exampleModalLabel">Sign In</h4>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group clearfix">
+               <!--<a href="javascript:void(0)" class="btn facebook_btn btn-lg btn-block" (click)="loginWithfacebook()"><i class="fab fa-facebook-square mr-3"></i>Facebook</a>-->
+               <!-- <a href="http://dev.stocktinder.com/loginFacebook" class="btn facebook_btn btn-lg btn-block"><i class="fab fa-facebook-square mr-3"></i>Facebook</a> -->
+               <button (click)="socialSignIn('facebook')" class="btn facebook_btn btn-lg btn-block"><i class="fab fa-facebook-square mr-3"></i>Facebook</button>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group clearfix">
+               <!--<a href="javascript:void(0)" class="btn btn-light btn-lg btn-block" (click)="loginWithGoogle()"><img src="assets/images/google.png" alt="google"> Google</a>-->
+               <!-- <a href="http://dev.stocktinder.com/loginGoogle" class="btn btn-light btn-lg btn-block"><img src="assets/images/google.png" alt="google">Google</a> -->
+               <button (click)="socialSignIn('google')" class="btn btn-light btn-lg btn-block"><img src="assets/images/google.png" alt="google"> Google</button>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="form-group text-center aur_line"> OR</div>
+          <form [formGroup]="loginForm" (ngSubmit)="onClickLogin()" #logForm="ngForm">
+            <div class="form-group">
+              <label>Email Address</label>
+              <input matInput formControlName="email" type="email" name="email"  class="form-control" placeholder="Email Address">
+              <div
+                *ngIf="(logForm.submitted && loginForm.controls['email'].invalid)  || loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)"
+                class="alert alert-danger p-1 mt-2">
+                <div class="small">
+                  Please enter a valid email address
+                </div>
+              </div>
+            </div>
+          <div class="form-group">
+            <label>Password</label>
+              <input matInput type="Password" class="form-control" formControlName="password" placeholder="Password" name="password">
+              <div
+                *ngIf="(logForm.submitted && loginForm.controls['password'].invalid)  || loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)"
+                class="alert alert-danger p-1 mt-2">
+                <div class="small">
+                  Please enter password
+                </div>
+              </div>
+            </div>
+            <div class="form-group text-left">
+              <div *ngIf="message" [ngClass]="message.cssClass">{{message.text}}</div>
+            </div>
+            <div class="forgot_passwrod form-group text-right">
+              <a href="javascript:void(0)" data-toggle="modal" data-target="#forgot_passwrod"  data-dismiss="modal" aria-label="Close">Forgot your password?</a>
+            </div>
+          <div class="form-group">
+              <!-- <button *ngIf="!(loginForm.invalid)" type="submit" mat-raised-button [disabled]="loading" class="btn btn-danger btn-lg btn-block text-uppercase">
+                <mat-spinner *ngIf="loading" color="primary" [diameter]="20" style=" float:left; margin-top: 8px; margin-right: 10px;"></mat-spinner>
+                Sign In</button>
+
+              style="cursor: context-menu; opacity: 0.5;" *ngIf="(loginForm.invalid)" type="button" mat-raised-button
+            -->
+              <button type="submit" [disabled]="loading" class="btn btn-danger btn-lg btn-block text-uppercase">
+                <mat-spinner *ngIf="loading" color="primary" [diameter]="20"
+                style=" float:left; margin-top: 8px; margin-right: 10px;"></mat-spinner>
+                Sign In</button>
+            </div>
+
+            <!-- <div class="form-group text-center account_link">
+              Don’t have an account? <a href="javascript:void(0)" data-toggle="modal" data-target="#register_modal">Create an account</a>
+            </div> -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Login Modal -->

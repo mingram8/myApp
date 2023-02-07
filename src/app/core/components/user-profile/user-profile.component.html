@@ -1,0 +1,233 @@
+
+        <div class="row">
+        <div class="col-md-4 pt-4">
+          <div *ngIf="userdetail" class="profile_left">
+            <div class="media profile_pic align-items-center">
+              <div class="media-left"><img style="width: 50px; height: 50px;"  src="{{ userdetail.picture != '' ? this.environment.server + '/image?name=' + userdetail.picture : 'assets/images/avtar.jpg'}}" onerror="this.src='assets/images/avtar.jpg'" class="rounded-circle z-depth-1 img-fluid"></div>
+              <div class="media-body">
+                <h4>{{userdetail.first_name + " " + (userdetail.last_name == null ? '' : userdetail.last_name)}}</h4>
+                <a *ngIf="isSelfProfile" href="javascript:void(0)" routerLink="/edit-profile" routerLinkActive="active">Edit Profile</a>
+              </div>
+            </div>
+
+            <div  class="profile_detail">
+              <dl *ngIf="isSelfProfile" class="d-flex">
+                <dt style="width: 30%;">Email</dt>
+                <dd>{{userdetail.email}}</dd>
+              </dl>
+              <dl *ngIf="!isSelfProfile" class="d-flex">
+                <dt style="width: 30%;">Username</dt>
+                <dd>{{userdetail.username}}</dd>
+              </dl>
+              <dl *ngIf="isSelfProfile" class="d-flex">
+                <dt style="width: 30%;">Gender</dt>
+                <dd>{{userdetail.gender}}</dd>
+              </dl>
+              <dl *ngIf="isSelfProfile" class="d-flex">
+                <dt style="width: 30%;">City</dt>
+                <dd>{{userdetail.city}}</dd>
+              </dl>
+              <dl *ngIf="isSelfProfile" class="d-flex">
+                <dt style="width: 30%;">Country</dt>
+                <dd>{{userdetail.country}}</dd>
+              </dl>
+              <dl class="d-flex">
+                <dt style="width: 30%;">Member since</dt>
+                <dd>{{userdetail.created_at*1000 | date}}</dd>
+              </dl>
+             </div>
+
+            <div *ngIf="!isSelfProfile" class="row pt-4">
+              <div class="col-6 pr-0">
+                <a *ngIf="!userdetail.is_follow" href="javascript:void(0)" (click)="followUser(userdetail.id)" class="btn btn-danger btn-block blur">Follow</a>
+                <a *ngIf="userdetail.is_follow" href="javascript:void(0)" (click)="unfollowUser(userdetail.id)" class="btn btn-info btn-block blur">
+                  <i class="fa fa-check" aria-hidden="true"></i> Unfollow
+                </a>
+              </div>
+              <div class="col-6">
+                <a [routerLink]="['/messages', currentUserId+'_'+userdetail.id,currentUserId, userdetail.id]" class="btn btn-outline-secondary btn-block">Message</a>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="fowollers">
+              <div class="row">
+                <div class="col-7">
+                  <h5>Followers {{followers.length > 0 ? followers.length : ''}}</h5>
+                </div>
+                <div class="col-5 text-right">
+                  <a href="javascript:">View All</a>
+                </div>
+              </div>
+              <!--Grid row-->
+              <div class="owl-carousel owl-theme" *ngFor="let follow of followers">
+                <div class="item">
+                  <div class="avatar">
+                    <img style="width: 40px;" src="{{ follow.picture != '' ? this.environment.server + '/image?name=' + follow.picture : 'assets/images/avtar.jpg'}}" onerror="this.src='assets/images/avtar.jpg'" class="rounded-circle z-depth-1 img-fluid">
+                  </div>
+                </div>
+              </div>
+              <!--Grid row-->
+
+            </div>
+
+          </div>
+
+        </div>
+        <div class="col-md-8 pt-4">
+            <div class="commet_left ">
+            <nav>
+                <div class="nav profile_tab" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link" id="nav-watch_list-tab" data-toggle="tab" href="#nav-watch_list" role="tab" aria-controls="nav-watch_list" aria-selected="false">Watch List {{watchListLength == 0 ? '' : watchListLength}}</a>
+                    <a class="nav-item nav-link" id="nav-followings-tab" data-toggle="tab" href="#nav-followings" role="tab" aria-controls="nav-followings" aria-selected="false">Followings {{follwingsLenght == 0 ? '' : follwingsLenght}}</a>
+                    <a class="nav-item nav-link active" id="nav-my_post-tab" data-toggle="tab" href="#nav-my_post" role="tab" aria-controls="nav-my_post" aria-selected="true">My Posts {{myPostLength == 0 ? '' : myPostLength}}</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade" id="nav-watch_list" role="tabpanel" aria-labelledby="nav-watch_list-tab">
+                  <div class="media Watchlist_sort">
+                    <div class="media-body">
+                      <select [(ngModel)]="sortType" (change)="getWatchlist()">
+                        <option value="MySort">Sort by MySort</option>
+                        <option value="A-Z">Sort by A-Z</option>
+                        <option value="Gain">Sort by Gain</option>
+                        <option value="Loss">Sort by Loss</option>
+                      </select>
+                    </div>
+                    <div *ngIf="isSelfProfile" class="media-right">
+
+                      <div *ngIf="!enableEdit">
+                        <a type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                          <img src="assets/images/dot.png" class="img-fluid">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" x-placement="bottom-end"
+                          style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(659px, 203px, 0px);">
+                          <a class="dropdown-item" (click)="enableEditMode()">Edit</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="enableEdit">
+                      <button class="btn btn-danger" (click)="enableEditMode()">
+                        Done
+                      </button>
+                    </div>
+                  </div>
+                  <div class="inputBox" *ngIf="enableEdit" style="padding-bottom : 10px;">
+                    <input id="myInputWatchlist" class="search-input" type="text" [(ngModel)]="keyword" placeholder="Search"
+                      (inputChanged)='onChangeSearch()' (keyup)="onChangeSearch()">
+                    <div id="searchDropdown" class="search-dropdown header-d add-watchlist" *ngIf="showData">
+                      <div class="w-100" *ngIf="showStockSearch">
+                        <div class="card first">
+
+                          <ul class="list-group list-group-flush">
+                            <li class="list-group-item" *ngFor='let stock of stocksData;'>
+                              <a (click)="addWatchList(stock.symbol)" style="cursor: pointer;">
+                                <div class="dropdown-list-card">
+                                  <div class="n-heading-block">
+                                    <h6 class="n-title">{{stock.symbol}}</h6>
+                                    <span class="n-sub-title">{{stock.name}}</span>
+                                  </div>
+                                  <div class="f-right">
+                                    <i style="cursor: pointer;" class="fa fa-plus-circle"></i>
+                                  </div>
+                                </div>
+                              </a>
+
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="w-100" *ngIf="showUserSearch">
+                        <div class="card">
+                          <div class="card-header">
+                            <strong>People</strong>
+                          </div>
+                          <ul class="list-group list-group-flush">
+                            <li class="list-group-item" *ngFor='let user of usersData;'>
+                              <a [routerLink]="['/user-profile', user.username]">
+                                <div class="dropdown-list-card">
+                                  <div class="n-heading-block">
+                                    <h6 class="n-title">{{user.username}}</h6>
+                                    <span class="n-sub-title"> {{user.first_name}} {{user.last_name}} </span>
+                                  </div>
+                                  <div class="f-right">
+                                    <img src="{{ user.picture != '' ? this.environment.server + '/image?name=' + user.picture : 'assets/images/avtar.jpg'}}" onerror="this.src='assets/images/avtar.jpg'" alt="">
+                                  </div>
+                                </div>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="trending_stocks_list">
+                    <ul>
+                      <li *ngFor="let list of watchList;">
+                        <div class="media align-items-center">
+                          <div class="media-left">
+                            <a [routerLink]="['/stock-profile', list.symbol]">
+                              <h5>{{list.symbol}}</h5>
+                            </a>
+                            <p>{{list.description}}</p>
+                          </div>
+
+                          <div class="media-body text-center">
+                            <img *ngIf="list.priceChange === ''" src="assets/images/price_same.png" class="img-fluid mr-3">
+                            <img *ngIf="list.priceChange === 'up'" src="assets/images/market_green.png" class="img-fluid mr-3">
+                            <img *ngIf="list.priceChange === 'down'" src="assets/images/market_red.png" class="img-fluid mr-3">
+                          </div>
+
+                          <div class="media-right text-right pr-4">
+                            {{ list.close }} <strong class="text-success ml-3">
+                              <img *ngIf="list.priceChange === 'up'" src="assets/images/up_arrow.png" class="img-fluid">
+                              <img *ngIf="list.priceChange === 'down'" src="assets/images/down_arrow.png" class="img-fluid">
+                              <span [ngClass]="{'text-success': list.priceChange === 'up', 'text-danger' : list.priceChange === 'down', 'text-dark' : list.priceChange === ''}">
+                                {{list.changeInPrice | number}} ({{ list.changeInPercentage | number}} %)
+                              </span> </strong>
+                          </div>
+                          <div class="media-right text-right" [ngClass]="{'d-none': !enableEdit}">
+                            <img (click)="removeWatchList(list.symbol)" style="cursor: pointer;" src="assets/images/trash.svg"
+                              alt="trash">
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                </div>
+                <div class="tab-pane fade" id="nav-followings" role="tabpanel" aria-labelledby="nav-followings-tab">
+
+
+                  <div class="following-list" *ngFor="let follow of followings">
+                    <div class="follower-info">
+                      <img src="{{ follow.picture != '' ? this.environment.server + '/image?name=' + follow.picture : 'assets/images/avtar.jpg'}}" onerror="this.src='assets/images/avtar.jpg'" class="rounded-circle z-depth-1 img-fluid">
+                      <div class="f-in">
+                        <a [routerLink]="['/user-profile', follow.username]">
+                          <h5>{{follow.username}}</h5>
+                        </a>
+                        <h6>{{follow.first_name + ' ' + follow.last_name}}</h6>
+                      </div>
+                    </div>
+                    <div class="follwers-num">
+                      {{ follow.followers > 0 ? follow.followers + ' Followers' : '0 Followers' }}
+                    </div>
+                  </div>
+
+
+                </div>
+                <div class="tab-pane fade show active" id="nav-my_post" role="tabpanel" aria-labelledby="nav-my_post-tab">
+
+
+                <!-- comment list -->
+                <hr class="list_hr">
+                <div class="user-profile">
+
+                  <app-comments  [myPostData]="myPostData"></app-comments>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+      </div>

@@ -1,0 +1,10 @@
+.user-profile{
+          margin: -42px -21px;
+}
+/* .commet_left{
+  border: 0 !important;
+} */
+.user-profile .commet_left,
+.user-profile .right-block{
+  border-bottom: 0;
+}

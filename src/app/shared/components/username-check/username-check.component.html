@@ -1,0 +1,57 @@
+<button style="display: none;" data-backdrop="static" data-keyboard="false" id="openUsernameModalButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#usernameCheck"></button>
+
+
+  <div class="modal fade" id="usernameCheck" #usernameModal tabindex="-1" role="dialog" aria-labelledby="login_modalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content login_signup">
+        <div class="modal-header text-center">
+          <!-- <button type="button" id="loginModalClose" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div>
+        <div class="modal-body">
+          <!-- <h4 class="modal-title text-center pb-4" id="exampleModalLabel">Sign In</h4> -->
+
+
+
+
+          <form [formGroup]="usernameForm" (ngSubmit)="onClickLogin()">
+            <div class="form-group">
+              <label>Username</label>
+              <input matInput formControlName="username" type="text" name="username" class="form-control"
+                placeholder="username">
+              <div
+                *ngIf="usernameForm.controls['username'].invalid && (usernameForm.controls['username'].dirty || usernameForm.controls['username'].touched)"
+                class="alert alert-danger p-1 mt-2">
+                <div class="small" *ngIf="usernameForm.controls['username'].invalid">
+                  Please enter a valid username (only alphabets allowed)
+                </div>
+              </div>
+            </div>
+            <div class="form-group text-left">
+              <div *ngIf="message" [ngClass]="message.cssClass">{{message.text}}</div>
+            </div>
+            <div class="form-group">
+              <button *ngIf="!(usernameForm.invalid)" type="submit" mat-raised-button [disabled]="loading"
+                class="btn btn-danger btn-lg btn-block text-uppercase">
+                <mat-spinner *ngIf="loading" color="primary" [diameter]="20"
+                  style=" float:left; margin-top: 8px; margin-right: 10px;"></mat-spinner>
+                Submit
+              </button>
+              <button style="cursor: context-menu; opacity: 0.5;" *ngIf="(usernameForm.invalid)" type="button"
+                mat-raised-button [disabled]="loading" class="btn btn-danger btn-lg btn-block text-uppercase">
+                <mat-spinner *ngIf="loading" color="primary" [diameter]="20"
+                  style=" float:left; margin-top: 8px; margin-right: 10px;"></mat-spinner>
+                Submit
+              </button>
+            </div>
+
+            <!-- <div class="form-group text-center account_link">
+                Don’t have an account? <a href="javascript:void(0)" data-toggle="modal" data-target="#register_modal">Create an account</a>
+              </div> -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

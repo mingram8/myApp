@@ -1,0 +1,459 @@
+<div class=" user-profile-border commet_left pt-4">
+  <div class="comment_search" *ngIf="!this.isUserPost">
+    <form>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-search"></i></span>
+        </div>
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+    </form>
+  </div>
+
+  <div class="comment_box" *ngIf="this.storageData && !this.isUserPost">
+    <div class="media">
+      <div class="media-left">
+        <a [routerLink]="['/user-profile', userdetail.username]">
+          <img style="width: 40px; height: 40px;"
+          src="{{ userdetail.picture != '' ? this.environment.server + '/image?name=' + userdetail.picture : 'assets/images/avtar.jpg'}}"
+          onerror="this.src='assets/images/avtar.jpg'" class="rounded-circle z-depth-1 img-fluid">
+        </a>
+      </div>
+      <div class="media-body">
+        <div class="comment_text_box text-dropdown">
+
+          <!-- <textarea id="comment" class="form-control" rows="10" [(ngModel)]="comment"
+            (inputChanged)='onChangeSearch()' (keyup)="onChangeSearch()">
+          </textarea> -->
+
+         
+          <!-- (keyup)="onChangeDiv()"> -->
+          <hr>
+
+          <div
+          
+          [innerHtml]="this.commentDiv | safeHtml"
+          style="height: 60px;" contenteditable="true"
+          id="commentDiv"
+          (input)='onChangeDiv()'
+          (focus)='onChangeDiv()'
+          (focusout)='onChangeDiv()'
+
+          style="resize: vertical;"
+          >
+          </div>
+          <div *ngIf="gifUrl" class="img_wrp">
+            <img id="close_img" #imgClose (click)="closeImage()" class="img_close" src="/assets/images/close.png" alt="">
+            <img id="gifImage" height=100% width=100% style="margin: 4px 0" src="{{gifUrl}}" class="imgResponsiveMax" alt="" />
+          </div>
+          <!-- width: 100%;
+          height: 100%;
+          display: block; -->
+
+
+          <div id="search-dropdown" class="search-dropdown header-d" *ngIf="showData && (stocksData.length > 0 || usersData.length > 0)">
+            <div class="w-100" *ngIf="showStockSearch">
+              <div class="card first">
+                <ul class="list-group list-group-flush scroll">
+                  <li (click)="selectStockOrUser('stock','$'+stock.symbol)" style="cursor: pointer;" class="list-group-item"
+                    *ngFor='let stock of stocksData;'>
+                    <a>
+                      <div class="dropdown-list-card">
+                        <div class="n-heading-block">
+                          <h6 class="n-title">{{stock.symbol}}</h6>
+                        </div>
+                        <div class="f-right">
+                          <span class="n-sub-title">{{stock.name | stringLengthExceedPipe:31 }}</span>
+                        </div>
+                      </div>
+                    </a>
+
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="w-100" *ngIf="showUserSearch">
+              <div class="card">
+                <!-- <div class="card-header">
+                  <strong>People</strong>
+                </div> -->
+                <ul class="list-group list-group-flush scroll">
+                  <li (click)="selectStockOrUser('people','@'+user.username)" style="cursor: pointer;" class="list-group-item"
+                    *ngFor='let user of usersData;'>
+                    <a>
+                      <div class="dropdown-list-card">
+                        <div class="n-heading-block d-flex">
+                          <img style="width: 30px; height: 30px;" src="{{ user.picture != '' ? this.environment.server + '/image?name=' + user.picture : 'assets/images/avtar.jpg'}}" onerror="this.src='assets/images/avtar.jpg'">
+                          <h6 class="n-title left-block">{{user.username | stringLengthExceedPipe:10 }}</h6>
+                        </div>
+                        <div class="f-right">
+                          <span class="n-sub-title"> {{user.first_name + " " +  user.last_name | stringLengthExceedPipe:31 }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="comment_text_box_bottom">
+            <div class="row">
+              <div class="col-auto">
+                <a href="javascript:void(0)" (click)="performSearch(searchTerm)"  data-toggle="modal" data-target="#gifModal" class="btn">GIF</a>
+
+
+
+              
+                <!-- Modal -->
+                <div class="modal fade" id="gifModal" tabindex="-1" role="dialog" aria-labelledby="gifModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <input type="text" #searchTerm (change)="performSearch(searchTerm)" (keyup)="performSearch(searchTerm)" class="form-control" style="border: black 1px solid;" placeholder="Search GIPHY">
+                        <div class="text-center">
+
+                          <button id="closeGifModal" #closeGifModal type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="modal-body">
+                      <div class="row gif-list masonry">
+                        <div class="item" *ngFor="let g of gifData;">
+                          
+                            <img src="{{g.images.original.url}}" alt="" style="cursor: pointer;" class="img-thumbnail" (click)="selectGif(g.images.original.url)">
+                        </div>
+                      </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="col-md-6 text-right">
+                <!-- <a href="javascript:void(0)" class="btn" style="border: none;">Natural</a> -->
+                <div class="btn-group">
+                            <!-- <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border: none;">
+                              Natural
+                            </button>
+
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="javascript:void(0)">Action</a>
+                              <a class="dropdown-item" href="javascript:void(0)">Another action</a>
+                              <a class="dropdown-item" href="javascript:void(0)">Something else here</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="javascript:void(0)">Separated link</a>
+                            </div> -->
+
+                          <select [(ngModel)]="feeling" id="feeling" class="form-select form-select-lg border-0 fs-1">
+                            <option style="font-weight: bold; color: white; background-color: #245534;" value="Long term Bullish">Long term Bullish</option>
+                            <option style="font-weight: bold; color: white; background-color: #245534;" value="Short term Bullish">Short term Bullish</option>
+                            <option style="font-weight: bold; color: white; background-color: #595757;" value="Natural" selected>Natural</option>
+                            <option style="font-weight: bold; color: white; background-color: #f2151c" value="Long term Bearish">Long term Bearish</option>
+                            <option style="font-weight: bold; color: white; background-color: #f2151c" value="Short term Bearish">Short term Bearish</option>
+                          </select>
+                          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="text-right pt-4">
+          <div class="form-group parent" style="display: inline-flex; padding-right: 3px;">
+
+            <div style="margin-right: 5px;" *ngIf="alertData" class="btn-sm" [ngClass]="alertData.cssClass">{{alertData.text}}</div>
+          </div>
+
+          <button (click)="addPost()" class="btn btn-success">Post</button>
+
+          <!-- <a class="btn btn-success" style="color:white;" href="javascript:void(0)" data-toggle="modal" data-target="#login_modal" *ngIf="!user">Post</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <hr class="list_hr">
+
+
+  <!-- comment list -->
+  <div *ngIf="postsData">
+    <div id="postOverflow" #postOverflow (scroll)="isScrolledIntoView($event)" *ngIf="postsData.length > 0; else noResultFound">
+      <div class="comments_list mb-2" id="post_{{val_post.id}}" *ngFor="let val_post of postsData">
+        <div class="media pb-2">
+          <div class="media-left">
+            <a [routerLink]="['/user-profile', val_post.user.username]">
+              <img style="width: 40px; height: 40px;"
+                src="{{ val_post.user.picture != '' ? this.environment.server + '/image?name=' + val_post.user.picture : 'assets/images/avtar.jpg'}}"
+                onerror="this.src='assets/images/avtar.jpg'" class="rounded-circle z-depth-1 img-fluid">
+            </a>
+          </div>
+          <div ng-app="myApp" ng-controller="personCtrl" class="media-body">
+            <div class="media media_post_detail">
+              <div class="media-body">
+                <h5><strong>{{val_post.user.username}}</strong>
+                  <span class="px-2 text-gray">|</span>
+                  <!-- <span class="text-gray">STR:</span> -->
+                  <strong [style.color]="val_post.color">{{val_post.feeling}}</strong>
+                </h5>
+                <h6> {{val_post.time*1000 | date : 'medium': 'medium'}}</h6>
+                <!-- <h6>{{ val_post.created_at | date:'dd-MMM-yyyy hh:mm:ss' }}</h6> -->
+              </div>
+              <div *ngIf="val_post.user.id == (storageData != null ? storageData['id'] : '')" class="media-right">
+                <a type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <img src="assets/images/dot.png" class="img-fluid">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" x-placement="bottom-end"
+                  style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(659px, 203px, 0px);">
+                  <a class="dropdown-item" (click)="deletePost(val_post.id)">Delete Post</a>
+                </div>
+              </div>
+            </div>
+            <div class="pt-2">
+              <div [innerHtml]="val_post.text | safeHtml">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-5">
+                Price Now:
+                <img *ngIf="val_post.priceChange === ''" src="assets/images/price_same.png" class="img-fluid">
+                <img *ngIf="val_post.priceChange === 'up'" src="assets/images/price_up.png" class="img-fluid">
+                <img *ngIf="val_post.priceChange === 'down'" src="assets/images/price_down.png" class="img-fluid">
+              </div>
+              <div class="col-7 text-right"><strong class="mr-2">Changed:</strong>
+                  <span class="text-danger"
+                    [ngClass]="{'text-success': val_post.priceChange === 'up', 'text-danger' : val_post.priceChange === 'down', 'text-dark' : val_post.priceChange === ''}">]
+                    {{val_post.changeInPrice
+                    | number }} ({{val_post.changeInPercentage | number }}%)
+                  </span>
+              </div>
+            </div>
+
+            <img *ngIf="val_post.picture != undefined && val_post.picture != ''" id="gifImage" height=200 width=250
+              src="{{val_post.picture}}" class="imgResponsiveMax" alt="" />
+
+            <div class="pt-2 comment_link">
+              <a href="javascript:" (click)="openReply(val_post)" id="reply_input_open" class="mrrr-5"><i
+                  class="fas fa-reply-all"></i> Reply</a>
+              <!-- <a href="javascript:void(0)" data-toggle="modal" data-target="#login_modal" class="mrrr-5"><i class="fas fa-reply-all" *ngIf="!user" ></i> Reply</a>          -->
+
+              <a *ngIf="val_post.replies" href="javascript:" (click)="openReplyList(val_post)"
+                class="mrrr-5">Replies
+                ({{val_post.replies.length}})</a>
+              <a href="javascript:void(0)" (click)="onReactComment(val_post.id,'like')" class="mrrr-5 text-success"><i class="fa-thumbs-up"
+                  [ngClass]="{'fas': val_post.reaction === 'like', 'fas': val_post.reaction !== 'like'}"></i>
+                {{val_post.likes}}</a>
+              <a href="javascript:void(0)" (click)="onReactComment(val_post.id,'dislike')" class="mrr-5 text-danger"><i
+                  class="fa-thumbs-down"
+                  [ngClass]="{'fas': val_post.reaction === 'dislike', 'fas': val_post.reaction !== 'dislike'}"></i>
+                {{val_post.dislikes}}</a>
+              <!-- comment textarea -->
+              <div class="comment_box" *ngIf="val_post.isReply">
+                <div class="media">
+                  <div class="media-left"><img src="assets/images/avtar.jpg" class="rounded-circle z-depth-1 img-fluid">
+                  </div>
+                  <div class="media-body">
+                    <div class="comment_text_box">
+                      <input style="display: none;" [(ngModel)]="val_post.id">
+                      <input style="display: none;" [(ngModel)]="val_post.id">
+
+                      <textarea class="form-control" [(ngModel)]="val_post.comment" rows="3"></textarea>
+                      <div class="comment_text_box_bottom">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <a href="javascript:void(0)" class="btn">GIF</a>
+                          </div>
+                          <div class="col-md-6 text-right">
+                            <!-- <a href="javascript:void(0)" class="btn" style="border: none;">Natural</a> -->
+
+
+                            <!-- <div class="btn-group">
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border: none;">
+                                      Expected Change
+                                    </button>
+                                    <div class="dropdown-menu">
+                                      <a class="dropdown-item" href="javascript:void(0)">Short Bullish</a>
+                                      <a class="dropdown-item" href="javascript:void(0)">Long Bullish</a>
+                                      <a class="dropdown-item" href="javascript:void(0)">Natural and short Bearish</a>
+                                      <div class="dropdown-divider"></div>
+                                      <a class="dropdown-item" href="javascript:void(0)"> long bearish</a>
+                                    </div>
+                                  </div> -->
+
+                            <select class="form-select btn" #reply_prediction_type ngModel="Natural" style="border: none; padding: 2px 10px;
+                                                                                  background: none;"
+                              aria-label="Default select example">
+                              <option style="font-weight: bold; color: #17b24b;" value="Long term Bullish">Long term Bullish
+                              </option>
+                              <option style="font-weight: bold; color: #17b24b;" value="Short term Bullish">Short term
+                                Bullish</option>
+                              <option style="font-weight: bold; color: #595757;" value="Natural" selected>Natural</option>
+                              <option style="font-weight: bold; color: #ff333a;" value="Long term Bearish">Long term Bearish
+                              </option>
+                              <option style="font-weight: bold; color: #ff333a;" value="Short term Bearish">Short term
+                                Bearish</option>
+                            </select>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-right pt-4"><button class="btn btn-success"
+                        (click)="addReply(val_post.id,val_post.comment,reply_prediction_type,val_post.stock)">Post</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- comment textarea -->
+
+
+              <!-- comment reply list -->
+              <div *ngIf="val_post.isReplyList">
+                <div class="comments_list" style="padding: 10px;" *ngFor="let reply of val_post.replies">
+                  <div class="media">
+                    <div class="media-left"><img src="assets/images/avtar.jpg" class="rounded-circle z-depth-1 img-fluid">
+                    </div>
+                    <div class="media-body">
+                      <div class="media">
+                        <div class="media-body">
+                          <h5><strong>{{reply.user.username}}</strong> <span class="px-3 text-gray">|</span>
+                            <span class="text-gray">STR:</span> <strong class="text-success">{{reply.stock}}</strong>
+                          </h5>
+                          <h6>{{ reply.created_at | date:'dd-MMM-yyyy hh:mm:ss' }}</h6>
+                        </div>
+                        <div class="media-right"><img src="assets/images/dot.png" class="img-fluid">
+                        </div>
+                      </div>
+                      <div class="pt-2">
+                        <p>{{reply.text}}</p>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-6">
+                          Price Now:
+                          <img *ngIf="reply.priceUp" src="assets/images/price_up.png" class="img-fluid">
+                          <img *ngIf="!reply.priceUp" src="assets/images/price_down.png" class="img-fluid">
+                        </div>
+                        <div class="col-6 text-right"><strong>Changed:
+                            <span class="text-danger"
+                              [ngClass]="{'text-success': reply.priceUp, 'text-danger' : !reply.priceUp}">{{reply.changeInPrice
+                              | number }} ({{reply.changeInPercentage | number }}%)</span></strong>
+                        </div>
+                      </div>
+
+                      <div class="pt-2 comment_link">
+                        <!-- <a href="javascript:" class="mr-5" (click)="reply.isReply = !reply.isReply"><i
+                                                      class="fas fa-reply-all"></i> Reply</a>
+                                              <a href="javascript:" (click)="reply.isReplyList = !reply.isReplyList"
+                                                  class="mr-5">Replies ({{reply.replies != undefined ? reply.replies.length : 0}})</a> -->
+
+                        <!-- comment textarea -->
+                        <div class="comment_box" *ngIf="reply.isReply">
+                          <div class="media">
+                            <div class="media-left"><img src="assets/images/avtar.jpg"
+                                class="rounded-circle z-depth-1 img-fluid"></div>
+                            <div class="media-body">
+                              <div class="comment_text_box">
+                                <input style="display: none;" [(ngModel)]="reply.id">
+                                <input style="display: none;" [(ngModel)]="reply.id">
+
+                                <textarea class="form-control" [(ngModel)]="reply.comment" rows="3"></textarea>
+                                <div class="comment_text_box_bottom">
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <a href="javascript:void(0)" class="btn">GIF</a>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                      <a href="javascript:void(0)" class="btn" style="border: none;">Natural</a>
+
+                                      <select class="form-select btn" #reply_prediction_type ngModel="Natural" style="border: none; padding: 2px 10px;
+                                  background: none;" aria-label="Default select example">
+                                        <option style="font-weight: bold; color: #17b24b;" value="Long term Bullish">Long
+                                          term Bullish</option>
+                                        <option style="font-weight: bold; color: #17b24b;" value="Short term Bullish">Short
+                                          term Bullish</option>
+                                        <option style="font-weight: bold; color: #595757;" value="Natural" selected>Natural
+                                        </option>
+                                        <option style="font-weight: bold; color: #ff333a;" value="Long term Bearish">Long
+                                          term Bearish</option>
+                                        <option style="font-weight: bold; color: #ff333a;" value="Short term Bearish">Short
+                                          term Bearish</option>
+                                      </select>
+
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="text-right pt-4"><button class="btn btn-success"
+                                  (click)="addReply(val_post.id,reply.comment,reply_prediction_type,val_post.stock)">Post</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- comment textarea -->
+
+
+                        <!-- comment reply list -->
+                        <div *ngIf="reply.isReplyList">
+                          <div class="comments_list" style="padding: 10px;" *ngFor="let reply_next of reply.replies">
+                            <div class="media">
+                              <div class="media-left"><img src="assets/images/avtar.jpg"
+                                  class="rounded-circle z-depth-1 img-fluid"></div>
+                              <div class="media-body">
+                                <div class="media">
+                                  <div class="media-body">
+                                    <h5><strong>{{reply.user.username}}</strong> <span class="px-3 text-gray">|</span> <span
+                                        class="text-gray">STR:</span> <strong class="text-success">{{reply.stock}}</strong>
+                                    </h5>
+                                    <h6>{{ reply_next.created_at | date:'dd-MMM-yyyy hh:mm:ss' }}</h6>
+                                  </div>
+                                  <div class="media-right"><img src="assets/images/dot.png" class="img-fluid"></div>
+                                </div>
+                                <div class="pt-2">
+                                  <p>{{reply_next.content}}</p>
+                                </div>
+
+                                <!-- <div class="row">
+                              <div class="col-6">
+                                Price Now: <img src="assets/images/price_up.png" class="img-fluid">
+                              </div>
+                              <div class="col-6 text-right"><strong>Changed:  <span class="text-success">10 (0.2%)</span></strong></div>
+                            </div> -->
+
+                                <div class="pt-2 comment_link">
+                                  <!-- <a href="javascript:"  class="mr-5"><i class="fas fa-reply-all"></i> Reply</a>
+                              <a href="javascript:" class="mr-5">Replies (2)</a>           -->
+                                  <!-- <a href="javascript:" class="mr-5"><i class="far fa-thumbs-up"></i> 25</a>
+                              <a href="javascript:" class="mr-5"><i class="far fa-thumbs-down"></i> 10</a> -->
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <hr>
+      </div>
+    </div>
+    <ng-template #noResultFound>
+      <h5 class="text-center">No post added</h5>
+    </ng-template>
+  </div>
+
+  <!-- comment list -->
+
+
+</div>

@@ -1,0 +1,274 @@
+
+
+      <div class="row">
+        <div class="col-md-8 pt-4">
+          <div class="stock_top">
+            <div class="row align-items-center">
+
+              <div class="col-md-6">
+                <div class="stock_name">{{stock}}</div>
+                <div *ngIf="stockData" class="stock_price_main">
+                  <span class="stock_price">{{stockData.close}}</span>
+                  <!-- <span class=" text-success ml-3"><img src="assets/images/price_up1.png"
+                      class="img-fluid"> {{stockData.changeInPrice | number}} ({{stockData.changeInPercentage | number}}%)</span> -->
+
+                      <span class="ml-3" [ngClass]="{'text-success': stockData.priceChange === 'up', 'text-danger' : stockData.priceChange === 'down', 'text-dark' : stockData.priceChange === ''}">
+                        <img *ngIf="stockData.priceChange === ''" src="assets/images/price_same.png" class="img-fluid">
+                        <img *ngIf="stockData.priceChange === 'up'" src="assets/images/price_up1.png" class="img-fluid">
+                        <img *ngIf="stockData.priceChange === 'down'" src="assets/images/price_down1.png" class="img-fluid">
+                        {{ stockData.changeInPrice > 0 ? '+' : '0' }}{{stockData.changeInPrice | number
+                        }} ({{ stockData.changeInPercentage > 0 ? '+' : '0' }}{{stockData.changeInPercentage | number }}%)</span>
+                  <!-- <span class=" text-danger ml-3"><img src="assets/images/price_down1.png" class="img-fluid"> 0.1800 (+6.77%)</span> -->
+                </div>
+              </div>
+
+              <!-- <div class="col-md-7">
+                <div *ngIf="stockInfo" class="stock_name">{{  }}</div>
+                  <div class="stock_price_main">
+                    <span *ngIf="stockInfo.Currency" class="stock_price">{{ stockInfo.Currency }} {{ stockInfo.MarketCapitalization }}</span>
+                    <span class=" text-success ml-3">
+                      <img src="assets/images/price_up.png" class="img-fluid">
+                       0.1800 (+6.77%)
+                    </span>
+                  </div>
+              </div> -->
+              <div class="col-md-6 text-right d-flex justify-content-end align-items-center">
+                <div *ngIf="stockData">
+                  <button *ngIf="!stockData.watch_list" (click)="addWatchList(this.stock)" style="padding: 4px 14px" class="btn btn-outline-dark">
+                  <i class="fa fa-eye" aria-hidden="true"></i>
+                  Watch</button>
+                  <button *ngIf="stockData.watch_list" (click)="removeWatchList(this.stock)" style="padding: 4px 14px" class="btn btn-outline-dark">
+                  <i class="fa fa-eye" aria-hidden="true"></i>
+                  Unwatch</button>
+                </div><p class="talking-view mb-0 pb-0 ml-4">3.1K Talking</p></div>
+            </div>
+          </div>
+          <hr>
+
+            <div style="text-align:center" class="stock-year-graph mb-5">
+            <!-- <apx-chart *ngIf="chartOptions"
+              [series]="chartOptions.series"
+              [chart]="chartOptions.chart"
+              [xaxis]="chartOptions.xaxis"
+              [title]="chartOptions.title">
+            </apx-chart> -->
+            <!-- <button class="button" (click)="updateOptions( '5min' )" [class.active]="activeOptionButton=='5min'">
+              5Min.
+            </button> -->
+            <div class="stock-year-graph-btn mb-3">
+            <button class="button" (click)="updateOptions( '1d' )" [class.active]="activeOptionButton=='1d'">
+              1D
+            </button>
+            <button class="button" (click)="updateOptions( '1m' )" [class.active]="activeOptionButton=='1m'">
+              1M
+            </button>
+            <button class="button" (click)="updateOptions( '6m' )" [class.active]="activeOptionButton=='6m'">
+              6M
+            </button>
+            <button class="button" (click)="updateOptions( '1ytd' )" [class.active]="activeOptionButton=='1ytd'">
+              1YTD
+            </button>
+            <button class="button" (click)="updateOptions( '1y' )" [class.active]="activeOptionButton=='1y'">
+              1Y
+            </button>
+            <button class="button" (click)="updateOptions( 'all' )" [class.active]="activeOptionButton=='all'">
+              All
+            </button>
+            </div>
+            <!--   [grid]="chartOptions.grid" -->
+            <!-- <div *ngIf="chartOptions"> -->
+              <!-- <figure id="chart"></figure> -->
+              <!-- <div #svgContainer class="w-100"></div> -->
+              <main [class]="theme">
+                <div class="chart-col">
+                  <div style="position: absolute; top: 50px; left: 50px; right: 50px; bottom: 50px">
+              
+              <ngx-charts-box-chart
+              *ngIf="chartType === 'box-chart'"
+                      class="chart-container"
+                      [view]="view"
+                      [results]="data2"
+                      [scheme]="colorScheme"
+                      [customColors]="customColors"
+                      [strokeColor]="strokeColor"
+                      [strokeWidth]="strokeWidth"
+                      [xAxis]="showXAxis"
+                      [yAxis]="showYAxis"
+                      [legend]="showLegend"
+                      [legendTitle]="legendTitle"
+                      [showXAxisLabel]="showXAxisLabel"
+                      [showYAxisLabel]="showYAxisLabel"
+                      [tooltipDisabled]="tooltipDisabled"
+                      [xAxisLabel]="xAxisLabel"
+                      [yAxisLabel]="yAxisLabel"
+                      [showGridLines]="showGridLines"
+                      [roundDomains]="roundDomains"
+                      [roundEdges]="roundEdges"
+                      [gradient]="gradient"
+                      [animations]="animations"
+                 
+                    >
+                    </ngx-charts-box-chart>
+                    </div>
+                    </div>
+                    </main> 
+              <!-- <apx-chart #chart
+              [series]="chartOptions.series"
+              [chart]="chartOptions.chart"
+              [colors]="chartOptions.colors"
+              [yaxis]="chartOptions.yaxis"
+              [dataLabels]="chartOptions.dataLabels"
+              [markers]="chartOptions.markers"
+              [stroke]="chartOptions.stroke"
+
+              [xaxis]="chartOptions.xaxis"
+              [tooltip]="chartOptions.tooltip"
+              [annotations]="chartOptions.annotations">
+              </apx-chart> -->
+
+            <!-- </div> -->
+
+
+            </div>
+
+          <nav>
+            <div class="nav profile_tab d-flex justify-content-between" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-conversation-tab" data-toggle="tab" href="#nav-conversation" role="tab" aria-controls="nav-conversation" aria-selected="true">Conversation</a>
+              <a class="nav-item nav-link" id="nav-news-tab" data-toggle="tab" href="#nav-news" role="tab" aria-controls="nav-news" aria-selected="false">News</a>
+              <a class="nav-item nav-link" id="nav-overview-tab" data-toggle="tab" href="#nav-overview" role="tab" aria-controls="nav-overview" aria-selected="false">Overview</a>
+            </div>
+          </nav>
+<div class="tab-content stock-profile-tab" id="nav-tabContent">
+
+<!-- Conversation -->
+<div class="tab-pane fade show active" id="nav-conversation" role="tabpanel" aria-labelledby="nav-conversation-tab">
+  <app-comments [stock]="stock"></app-comments>
+</div>
+<!-- Conversation -->
+
+<!-- News -->
+<div *ngIf="marketNews" class="tab-pane fade market_news" id="nav-news" role="tabpanel" aria-labelledby="nav-news-tab">
+  <div *ngIf="marketNews.length > 0; else noResultFound" >
+    <div class="media mt-5 w-100" *ngFor="let news of marketNews;">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="media-right">
+            <img src="{{news.image}}" class="img-fluid w-100">
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <div class="media-body">
+            <!-- <p>{{news.title}}</p> -->
+            <h6 class="mb-2">{{news.publishedDate}}</h6>
+            <h5><a target="_blank" style="font-weight: bold;" href="{{news.url}}">
+              {{news.title}}
+            </a></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<ng-template #noResultFound>
+  <h5 class="text-center">No news found</h5>
+</ng-template>
+</div>
+<!-- News -->
+<!-- Overview -->
+<div class="tab-pane fade" id="nav-overview" role="tabpanel" aria-labelledby="nav-overview-tab">
+  <div class="overview">
+    <h3>Overview</h3>
+    <hr>
+
+    <div class="row">
+
+    <div class="col-md-6" *ngIf="stockPriceData">
+    <div class="media overview_list">
+      <div class="media-body">Previews Close</div>
+      <div class="media-right">{{stockPriceData.close}}</div>
+    </div>
+
+    <div class="media overview_list">
+      <div class="media-body">Open</div>
+      <div class="media-right">{{stockPriceData.open}}</div>
+    </div>
+
+    <div class="media overview_list">
+      <div class="media-body">High</div>
+      <div class="media-right">{{stockPriceData.high}}</div>
+    </div>
+
+    <div class="media overview_list">
+      <div class="media-body">Low</div>
+      <div class="media-right">{{stockPriceData.low}}</div>
+    </div>
+
+    <div class="media overview_list">
+      <div class="media-body">Day’s Range</div>
+      <div class="media-right"> {{stockPriceData.low}} - {{stockPriceData.high}}</div>
+    </div>
+
+    <div class="media overview_list">
+      <div class="media-body">Weekly Range</div>
+      <div class="media-right">{{stockPriceData.fifty_two_week_low}} - {{stockPriceData.fifty_two_week_high}}</div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="media overview_list">
+      <div class="media-body">Bid</div>
+      <div class="media-right">N/A</div>
+    </div>
+
+    <div class="media overview_list">
+      <div class="media-body">Ask</div>
+      <div class="media-right">N/A</div>
+    </div>
+
+    <div *ngIf="stockInfo" class="media overview_list">
+      <div class="media-body">Market Cap</div>
+      <div class="media-right">{{ stockInfo.MarketCapitalization }}</div>
+    </div>
+
+    <div *ngIf="stockPriceData" class="media overview_list">
+      <div class="media-body">Volume</div>
+      <div class="media-right">{{stockPriceData.volume}}</div>
+    </div>
+
+    <div *ngIf="stockPriceData" class="media overview_list">
+      <div class="media-body">Avg. Volume</div>
+      <div class="media-right">{{stockPriceData.adj_volume}}</div>
+    </div>
+  </div>
+</div>
+
+  </div>
+
+  <div class="overview_detail" *ngIf="stockInfo">
+  <h5> {{ stockInfo.name }}</h5>
+  <p>{{ stockInfo.Description }} </p>
+
+  <hr>
+
+    <p>Sector: <strong>N/A</strong></p>
+    <p>Industry: Consumer <strong>N/A</strong></p>
+    <p>Full Time Employees: <strong>N/A</strong></p>
+
+
+
+  </div>
+
+
+</div>
+<!-- Overview -->
+</div>
+        </div>
+        <div class="col-md-4 pt-4">
+            <img src="assets/images/google_ads.png" class="img-fluid w-100">
+            <!--get trending stock-->
+            <app-sidebar-trending-stocks></app-sidebar-trending-stocks>
+
+            <div class="py-4"><img src="assets/images/google_ads.png" class="img-fluid w-100"></div>
+            <!--get company market news-->
+            <app-sidebar-market-news></app-sidebar-market-news>
+        </div>
+      </div>

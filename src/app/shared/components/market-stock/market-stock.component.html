@@ -1,0 +1,17 @@
+<input [(ngModel)]='market_open_text' type="hidden">
+<h6 class="text-danger pb-2 market_open_h6">{{market_open_text}}</h6>
+<div class="row">
+    <div class="col-md-12">
+        <div class="us_market d-flex">
+        <div class="market_stock flex-fill" *ngFor="let sd of stockData">
+            <h5><a [routerLink]="['/stock-profile', sd.symbol]" routerLinkActive="active">{{sd.symbol}}</a></h5>
+            <p>{{ sd.price }} <br>
+                <span class="text-danger"
+                [ngClass]="{'text-success': sd.priceChange === 'up', 'text-danger' : sd.priceChange === 'down', 'text-dark' : sd.priceChange === ''}">
+                    {{ sd.changeInPrice > 0 ? '+' : '' }}{{sd.changeInPrice | number
+                    }} ({{ sd.changeInPercentage > 0 ? '+' : '' }}{{sd.changeInPercentage | number }}%)</span>
+            </p>
+        </div>
+        </div>
+    </div>
+</div>

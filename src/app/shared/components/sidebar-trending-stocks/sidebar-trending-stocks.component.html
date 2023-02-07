@@ -1,0 +1,134 @@
+<div class="trending_stocks mt-4">
+  <div class="main-sidebar">
+  <!-- <h3>Trending Stocks</h3> -->
+  <h3>Top discussed in Stocktinder</h3>
+  <div class="trending_stocks_list">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col" class="border-top-0">Symbol</th>
+          <th scope="col" class="border-top-0 text-center">Last Price</th>
+          <th scope="col" class="border-top-0 text-center">Change</th>
+          <th scope="col" class="border-top-0 text-right pr-0">Change %</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let mtd of mostTalkedOfDay;let i = index">
+        <tr>
+          <th scope="row">
+            <a [routerLink]="['/stock-profile', mtd.symbol]">
+              <h5> {{ mtd.symbol }}</h5>
+            </a>
+          </th>
+          <td class="text-center">{{ mtd.price}}</td>
+          <td class="text-center">
+            <img *ngIf="mtd.priceChange === ''" src="assets/images/price_same.png" class="img-fluid">
+            <img *ngIf="mtd.priceChange === 'up'" src="assets/images/market_green.png" class="img-fluid">
+            <img *ngIf="mtd.priceChange === 'down'" src="assets/images/market_red.png" class="img-fluid">
+          </td>
+          <td class="text-right pr-0">
+            <span class="ml-3"
+            [ngClass]="{'text-success': mtd.priceChange === 'up', 'text-danger' : mtd.priceChange === 'down', 'text-dark' : mtd.priceChange === ''}">
+            ({{ mtd.changeInPercentage | number }} %)</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <ul *ngFor="let mtd of mostTalkedOfDay;let i = index">
+      <li>
+        <div class="media align-items-center">
+          <div class="media-left">
+            <a [routerLink]="['/stock-profile', mtd.symbol]">
+              <h5> {{ mtd.symbol }}</h5>
+            </a>
+          </div>
+          <div class=" text-right" style="margin-left:20px;">
+            <img *ngIf="mtd.priceChange === ''" src="assets/images/price_same.png" class="img-fluid mr-3">
+            <img *ngIf="mtd.priceChange === 'up'" src="assets/images/market_green.png" class="img-fluid mr-3">
+            <img *ngIf="mtd.priceChange === 'down'" src="assets/images/market_red.png" class="img-fluid mr-3">
+
+            {{ mtd.price}} <strong class="ml-3"
+              [ngClass]="{'text-success': mtd.priceChange === 'up', 'text-danger' : mtd.priceChange === 'down', 'text-dark' : mtd.priceChange === ''}">
+              ({{ mtd.changeInPercentage | number }} %)</strong>
+          </div>
+        </div>
+      </li>
+    </ul> -->
+  </div>
+  <div class="read_more"><a routerLink="/trending/discussed" href="javascript:void(0)">View More</a></div>
+</div>
+
+<div class="main-sidebar mt-3">
+  <h3>Top Mover of the day</h3>
+  <div class="trending_stocks_list">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col" class="border-top-0">Symbol</th>
+          <th scope="col" class="border-top-0 text-center">Last Price</th>
+          <th scope="col" class="border-top-0 text-center">Change</th>
+          <th scope="col" class="border-top-0 text-right pr-0">Change %</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let tm of topMover;let i = index">
+        <tr>
+          <th scope="row">
+            <a [routerLink]="['/stock-profile', tm.symbol]">
+              <h5> {{ tm.symbol }}</h5>
+            </a>
+          </th>
+          <td class="text-center">{{ tm.price}}</td>
+          <td class="text-center">
+            <img *ngIf="tm.priceChange === ''" src="assets/images/price_same.png" class="img-fluid">
+            <img *ngIf="tm.priceChange === 'up'" src="assets/images/market_green.png" class="img-fluid">
+            <img *ngIf="tm.priceChange === 'down'" src="assets/images/market_red.png" class="img-fluid">
+          </td>
+          <td class="text-right pr-0">
+            <span class="ml-3"
+            [ngClass]="{'text-success': tm.priceChange === 'up', 'text-danger' : tm.priceChange === 'down', 'text-dark' : tm.priceChange === ''}">
+            ({{ tm.changeInPercentage | number }} %)</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="read_more"><a routerLink="/trending/mover" href="javascript:void(0)">View More</a></div>
+</div>
+
+<div class="main-sidebar mt-3">
+  <h3>Top Loser of the day</h3>
+  <div class="trending_stocks_list">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col" class="border-top-0">Symbol</th>
+          <th scope="col" class="border-top-0 text-center">Last Price</th>
+          <th scope="col" class="border-top-0 text-center">Change</th>
+          <th scope="col" class="border-top-0 text-right pr-0">Change %</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let tl of topLoser;let i = index">
+        <tr>
+          <th scope="row">
+            <a [routerLink]="['/stock-profile', tl.symbol]">
+              <h5> {{ tl.symbol }}</h5>
+            </a>
+          </th>
+          <td class="text-center">{{ tl.price}}</td>
+          <td class="text-center">
+            <img *ngIf="tl.priceChange === ''" src="assets/images/price_same.png" class="img-fluid">
+            <img *ngIf="tl.priceChange === 'up'" src="assets/images/market_green.png" class="img-fluid">
+            <img *ngIf="tl.priceChange === 'down'" src="assets/images/market_red.png" class="img-fluid">
+          </td>
+          <td class="text-right pr-0">
+            <span class="ml-3"
+              [ngClass]="{'text-success': tl.priceChange === 'up', 'text-danger' : tl.priceChange === 'down', 'text-dark' : tl.priceChange === ''}">
+              ( {{ tl.changeInPercentage | number }} %)</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <div class="read_more"><a routerLink="/trending/loser" href="javascript:void(0)">View More</a></div>
+  </div>
+</div>
